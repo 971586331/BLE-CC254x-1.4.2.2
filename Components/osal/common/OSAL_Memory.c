@@ -131,22 +131,28 @@
 
 // Size of the heap bucket reserved for small block-sized allocations.
 // Adjust accordingly to attempt to accommodate the vast majority of very high frequency operations.
+//为小块大小的分配保留的堆桶大小。
+//相应调整以尝试适应绝大多数非常高频率的操作。
 #define OSALMEM_SMALLBLK_BUCKET  ((OSALMEM_SMALL_BLKSZ * OSALMEM_SMALL_BLKCNT) + OSALMEM_LL_BLKSZ)
 // Index of the first available osalMemHdr_t after the small-block heap which will be set in-use in
 // order to prevent the small-block bucket from being coalesced with the wilderness.
+//在小块堆之后的第一个可用的osalMemHdr_t的索引，它将按顺序设置为使用，以防止小块桶与荒野合并。
 #define OSALMEM_SMALLBLK_HDRCNT   (OSALMEM_SMALLBLK_BUCKET / OSALMEM_HDRSZ)
 // Index of the first available osalMemHdr_t after the small-block heap which will be set in-use in
+// 在将要使用的小块堆之后的第一个可用的osalMemHdr_t的索引
 #define OSALMEM_BIGBLK_IDX        (OSALMEM_SMALLBLK_HDRCNT + 1)
 // The size of the wilderness after losing the small-block heap, the wasted header to block the
 // small-block heap from being coalesced, and the wasted header to mark the end of the heap.
+//丢失小块堆后的荒野大小，阻止小块堆被合并的浪费标头，以及标记堆末尾的浪费标头。
 #define OSALMEM_BIGBLK_SZ         (MAXMEMHEAP - OSALMEM_SMALLBLK_BUCKET - OSALMEM_HDRSZ*2)
 // Index of the last available osalMemHdr_t at the end of the heap which will be set to zero for
 // fast comparisons with zero to determine the end of the heap.
+// 堆末尾的最后一个可用的osalMemHdr_t的索引将被设置为零，以便与零进行快速比较以确定堆的结束。
 #define OSALMEM_LASTBLK_IDX      ((MAXMEMHEAP / OSALMEM_HDRSZ) - 1)
 
 // For information about memory profiling, refer to SWRA204 "Heap Memory Management", section 1.5.
 #if !defined OSALMEM_PROFILER
-#define OSALMEM_PROFILER           FALSE  // Enable/disable the memory usage profiling buckets.
+#define OSALMEM_PROFILER           FALSE  // 内存使用性能分析 Enable/disable the memory usage profiling buckets.
 #endif
 #if !defined OSALMEM_PROFILER_LL
 #define OSALMEM_PROFILER_LL        FALSE  // Special profiling of the Long-Lived bucket.
@@ -247,10 +253,12 @@ void osal_mem_init(void)
   HAL_ASSERT(((OSALMEM_SMALL_BLKSZ % OSALMEM_HDRSZ) == 0));
 
 #if OSALMEM_PROFILER
+	//如果使能了内存使用性能分析，则初始化内存为特定字符
   (void)osal_memset(theHeap, OSALMEM_INIT, MAXMEMHEAP);
 #endif
 
   // Setup a NULL block at the end of the heap for fast comparisons with zero.
+  // 将堆的最后一个单元的val置0
   theHeap[OSALMEM_LASTBLK_IDX].val = 0;
 
   // Setup the small-block bucket.
@@ -261,6 +269,7 @@ void osal_mem_init(void)
   theHeap[OSALMEM_SMALLBLK_HDRCNT].val = (OSALMEM_HDRSZ | OSALMEM_IN_USE);
 
   // Setup the wilderness.
+  // 设置没有使用的
   theHeap[OSALMEM_BIGBLK_IDX].val = OSALMEM_BIGBLK_SZ;  // Set 'len' & clear 'inUse' field.
 
 #if ( OSALMEM_METRICS )

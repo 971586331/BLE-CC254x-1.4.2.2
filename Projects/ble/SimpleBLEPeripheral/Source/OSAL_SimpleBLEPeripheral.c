@@ -142,6 +142,7 @@ void osalInitTasks( void )
 
 #if defined ( OSAL_CBTIMER_NUM_TASKS )
   /* Callback Timer Tasks */
+	//回调计时器任务
   osal_CbTimerInit( taskID );
   taskID += OSAL_CBTIMER_NUM_TASKS;
 #endif
@@ -159,9 +160,10 @@ void osalInitTasks( void )
   GATT_Init( taskID++ );
 
   /* Profiles */
+  //通用访问协议
   GAPRole_Init( taskID++ );
   GAPBondMgr_Init( taskID++ );
-
+	//通用属性协议
   GATTServApp_Init( taskID++ );
 
   /* Application */

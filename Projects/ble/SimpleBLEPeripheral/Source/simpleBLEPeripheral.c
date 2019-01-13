@@ -283,7 +283,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
 {
   simpleBLEPeripheral_TaskID = task_id;
 
-  // Setup the GAP
+  // Setup the GAP GAP设置参数值
   VOID GAP_SetParamValue( TGAP_CONN_PAUSE_PERIPHERAL, DEFAULT_CONN_PAUSE_PERIPHERAL );
   
   // Setup the GAP Peripheral Role Profile
@@ -307,7 +307,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
     uint16 desired_slave_latency = DEFAULT_DESIRED_SLAVE_LATENCY;
     uint16 desired_conn_timeout = DEFAULT_DESIRED_CONN_TIMEOUT;
 
-    // Set the GAP Role Parameters
+    // Set the GAP Role Parameters	设置GAP角色参数
     GAPRole_SetParameter( GAPROLE_ADVERT_ENABLED, sizeof( uint8 ), &initial_advertising_enable );
     GAPRole_SetParameter( GAPROLE_ADVERT_OFF_TIME, sizeof( uint16 ), &gapRole_AdvertOffTime );
 
@@ -321,10 +321,10 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
     GAPRole_SetParameter( GAPROLE_TIMEOUT_MULTIPLIER, sizeof( uint16 ), &desired_conn_timeout );
   }
 
-  // Set the GAP Characteristics
+  // Set the GAP Characteristics	设置GAP特征
   GGS_SetParameter( GGS_DEVICE_NAME_ATT, GAP_DEVICE_NAME_LEN, attDeviceName );
 
-  // Set advertising interval
+  // Set advertising interval	设置广播间隔
   {
     uint16 advInt = DEFAULT_ADVERTISING_INTERVAL;
 
@@ -334,7 +334,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
     GAP_SetParamValue( TGAP_GEN_DISC_ADV_INT_MAX, advInt );
   }
 
-  // Setup the GAP Bond Manager
+  // Setup the GAP Bond Manager	设置GAP管理
   {
     uint32 passkey = 0; // passkey "000000"
     uint8 pairMode = GAPBOND_PAIRING_MODE_WAIT_FOR_REQ;
@@ -348,7 +348,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
     GAPBondMgr_SetParameter( GAPBOND_BONDING_ENABLED, sizeof ( uint8 ), &bonding );
   }
 
-  // Initialize GATT attributes
+  // Initialize GATT attributes	//设置GATT属性
   GGS_AddService( GATT_ALL_SERVICES );            // GAP
   GATTServApp_AddService( GATT_ALL_SERVICES );    // GATT attributes
   DevInfo_AddService();                           // Device Information Service
@@ -357,7 +357,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
   VOID OADTarget_AddService();                    // OAD Profile
 #endif
 
-  // Setup the SimpleProfile Characteristic Values
+  // Setup the SimpleProfile Characteristic Values	设置一个简单框架的特性参数值
   {
     uint8 charValue1 = 1;
     uint8 charValue2 = 2;
@@ -374,12 +374,14 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
 
 #if defined( CC2540_MINIDK )
 
-  SK_AddService( GATT_ALL_SERVICES ); // Simple Keys Profile
+  SK_AddService( GATT_ALL_SERVICES ); // Simple Keys Profile	简单密钥配置文件
 
   // Register for all key events - This app will handle all key events
+  // 注册所有关键事件 - 此应用程序将处理所有关键事件
   RegisterForKeys( simpleBLEPeripheral_TaskID );
 
   // makes sure LEDs are off
+  // 确保LED熄灭
   HalLedSet( (HAL_LED_1 | HAL_LED_2), HAL_LED_MODE_OFF );
 
   // For keyfob board set GPIO pins into a power-optimized state
@@ -421,16 +423,19 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
   // Enable clock divide on halt
   // This reduces active current while radio is active and CC254x MCU
   // is halted
+  // 在暂停时启用时钟分频当无线电处于活动状态且CC254x MCU停止时，这会降低有效电流
   HCI_EXT_ClkDivOnHaltCmd( HCI_EXT_ENABLE_CLK_DIVIDE_ON_HALT );
 
 #if defined ( DC_DC_P0_7 )
 
   // Enable stack to toggle bypass control on TPS62730 (DC/DC converter)
+  // 启用堆栈以在TPS62730（DC / DC转换器）上切换旁路控制
   HCI_EXT_MapPmIoPortCmd( HCI_EXT_PM_IO_PORT_P0, HCI_EXT_PM_IO_PORT_PIN7 );
 
 #endif // defined ( DC_DC_P0_7 )
 
   // Setup a delayed profile startup
+  // 设置延迟配置文件启动
   osal_set_event( simpleBLEPeripheral_TaskID, SBP_START_DEVICE_EVT );
 
 }

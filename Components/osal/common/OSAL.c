@@ -150,9 +150,11 @@ static ICall_TimerID osal_timerid_msec_timer;
 static unsigned osal_msec_timer_seq = 0;
 
 // proxy task ID map
+// 代理任务ID映射
 static uint8 osal_proxy_tasks[OSAL_MAX_NUM_PROXY_TASKS];
 
 // service dispatcher entity IDs corresponding to OSAL tasks
+// 与OSAL任务对应的服务调度程序实体ID
 static uint8 *osal_dispatch_entities;
 
 static uint8 osal_notask_entity;
@@ -1334,28 +1336,35 @@ uint8 osal_init_system( void )
 {
 #if !defined USE_ICALL && !defined OSAL_PORT2TIRTOS
   // Initialize the Memory Allocation System
+  // 初始化内存分配系统
   osal_mem_init();
 #endif /* !defined USE_ICALL && !defined OSAL_PORT2TIRTOS */
 
   // Initialize the message queue
+  // 初始化消息队列
   osal_qHead = NULL;
 
   // Initialize the timers
+  //初始化定时器
   osalTimerInit();
 
   // Initialize the Power Management System
+  // 初始化电源管理系统
   osal_pwrmgr_init();
 
 #ifdef USE_ICALL
   /* Prepare memory space for service enrollment */
+	// 准备服务注册的内存空间
   osal_prepare_svc_enroll();
 #endif /* USE_ICALL */
 
   // Initialize the system tasks.
+  // 初始化系统任务
   osalInitTasks();
 
 #if !defined USE_ICALL && !defined OSAL_PORT2TIRTOS
   // Setup efficient search for the first free block of heap.
+  // 设置有效搜索堆的第一个空闲块
   osal_mem_kick();
 #endif /* !defined USE_ICALL && !defined OSAL_PORT2TIRTOS */
 
@@ -1571,7 +1580,7 @@ void osal_run_system( void )
 #ifndef HAL_BOARD_CC2538
   osalTimeUpdate();
 #endif
-
+	//硬件轮询处理
   Hal_ProcessPoll();
 #endif /* USE_ICALL */
 
@@ -1651,7 +1660,7 @@ void osal_run_system( void )
 #endif /* USE_ICALL */
 
   do {
-    if (tasksEvents[idx])  // Task is highest priority that is ready.
+    if (tasksEvents[idx])  // Task is highest priority that is ready. 判断高优先级的任务是否准备好
     {
       break;
     }
@@ -1672,7 +1681,7 @@ void osal_run_system( void )
     activeTaskID = TASK_NO_TASK;
 
     HAL_ENTER_CRITICAL_SECTION(intState);
-    tasksEvents[idx] |= events;  // Add back unprocessed events to the current task.
+    tasksEvents[idx] |= events;  // Add back unprocessed events to the current task. 保存未被处理的事件
     HAL_EXIT_CRITICAL_SECTION(intState);
   }
 #if defined( POWER_SAVING ) && !defined(USE_ICALL)

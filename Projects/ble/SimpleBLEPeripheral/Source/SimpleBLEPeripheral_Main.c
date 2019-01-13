@@ -80,12 +80,15 @@
 int main(void)
 {
   /* Initialize hardware */
+  // 初始化CPU寄存器和IO方向
   HAL_BOARD_INIT();
 
   // Initialize board I/O
+  // 开始初始化
   InitBoard( OB_COLD );
 
   /* Initialze the HAL driver */
+  // 根据宏开关初始化使用到的硬件
   HalDriverInit();
 
   /* Initialize NV system */
@@ -94,12 +97,14 @@ int main(void)
   /* Initialize LL */
 
   /* Initialize the operating system */
+  // 初始化osal操作系统
   osal_init_system();
 
   /* Enable interrupts */
   HAL_ENABLE_INTERRUPTS();
 
   // Final board initialization
+  // 初始化完成
   InitBoard( OB_READY );
 
   #if defined ( POWER_SAVING )
