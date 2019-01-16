@@ -1,2 +1,0 @@
----- LL_Init Matches (1 in 1 files) ----
-OSAL_BloodPressure.c (d:\github\ble-cc254x-1.4.2.2\projects\ble\bloodpressure\source):  LL_Init( taskID++ );
