@@ -10,9 +10,9 @@
     <debug>1</debug>
     <settings>
       <name>General</name>
-      <archiveVersion>2</archiveVersion>
+      <archiveVersion>3</archiveVersion>
       <data>
-        <version>7</version>
+        <version>8</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -142,8 +142,8 @@
         </option>
         <option>
           <name>Input variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Input description</name>
@@ -151,8 +151,8 @@
         </option>
         <option>
           <name>Output variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Output description</name>
@@ -274,6 +274,10 @@
           <name>UseMDU</name>
           <state></state>
         </option>
+        <option>
+          <name>AdditionalDriver</name>
+          <state></state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -299,7 +303,7 @@
           <state>HAL_LCD=FALSE</state>
           <state>HAL_LED=TRUE</state>
           <state>HAL_KEY=TRUE</state>
-          <state>CC2540_MINIDK</state>
+          <state>xCC2540_MINIDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -733,6 +737,7 @@
       <data>
         <extensions></extensions>
         <cmdline></cmdline>
+        <hasPrio>0</hasPrio>
       </data>
     </settings>
     <settings>
@@ -752,7 +757,7 @@
       <name>XLINK</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>19</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -770,7 +775,7 @@
         </option>
         <option>
           <name>FormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -972,7 +977,7 @@
         </option>
         <option>
           <name>ExtraFormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -1076,6 +1081,26 @@
           <name>XLink DPC Address</name>
           <state>1</state>
         </option>
+        <option>
+          <name>XlinkLogEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogInputFiles</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogModuleSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogPrintfScanf</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogSegmentSelection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1122,9 +1147,9 @@
     <debug>1</debug>
     <settings>
       <name>General</name>
-      <archiveVersion>2</archiveVersion>
+      <archiveVersion>3</archiveVersion>
       <data>
-        <version>7</version>
+        <version>8</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1254,8 +1279,8 @@
         </option>
         <option>
           <name>Input variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Input description</name>
@@ -1263,8 +1288,8 @@
         </option>
         <option>
           <name>Output variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Output description</name>
@@ -1386,6 +1411,10 @@
           <name>UseMDU</name>
           <state></state>
         </option>
+        <option>
+          <name>AdditionalDriver</name>
+          <state></state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1406,11 +1435,12 @@
           <state>OSAL_CBTIMER_NUM_TASKS=1</state>
           <state>HAL_AES_DMA=TRUE</state>
           <state>HAL_DMA=TRUE</state>
-          <state>POWER_SAVING</state>
+          <state>xPOWER_SAVING</state>
           <state>xPLUS_BROADCASTER</state>
           <state>HAL_LCD=TRUE</state>
-          <state>HAL_LED=FALSE</state>
+          <state>HAL_LED=TRUE</state>
           <state>HAL_KEY=TRUE</state>
+          <state>HAL_UART=TRUE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1844,6 +1874,7 @@
       <data>
         <extensions></extensions>
         <cmdline></cmdline>
+        <hasPrio>0</hasPrio>
       </data>
     </settings>
     <settings>
@@ -1863,7 +1894,7 @@
       <name>XLINK</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>19</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1881,7 +1912,7 @@
         </option>
         <option>
           <name>FormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -2083,7 +2114,7 @@
         </option>
         <option>
           <name>ExtraFormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -2187,6 +2218,26 @@
           <name>XLink DPC Address</name>
           <state>1</state>
         </option>
+        <option>
+          <name>XlinkLogEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogInputFiles</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogModuleSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogPrintfScanf</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogSegmentSelection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2233,9 +2284,9 @@
     <debug>1</debug>
     <settings>
       <name>General</name>
-      <archiveVersion>2</archiveVersion>
+      <archiveVersion>3</archiveVersion>
       <data>
-        <version>7</version>
+        <version>8</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2365,8 +2416,8 @@
         </option>
         <option>
           <name>Input variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Input description</name>
@@ -2374,8 +2425,8 @@
         </option>
         <option>
           <name>Output variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Output description</name>
@@ -2495,6 +2546,10 @@
         </option>
         <option>
           <name>UseMDU</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AdditionalDriver</name>
           <state></state>
         </option>
       </data>
@@ -2960,6 +3015,7 @@
       <data>
         <extensions></extensions>
         <cmdline></cmdline>
+        <hasPrio>0</hasPrio>
       </data>
     </settings>
     <settings>
@@ -2979,7 +3035,7 @@
       <name>XLINK</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>19</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2997,7 +3053,7 @@
         </option>
         <option>
           <name>FormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -3199,7 +3255,7 @@
         </option>
         <option>
           <name>ExtraFormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -3303,6 +3359,26 @@
           <name>XLink DPC Address</name>
           <state>1</state>
         </option>
+        <option>
+          <name>XlinkLogEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogInputFiles</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogModuleSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogPrintfScanf</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogSegmentSelection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -3349,9 +3425,9 @@
     <debug>1</debug>
     <settings>
       <name>General</name>
-      <archiveVersion>2</archiveVersion>
+      <archiveVersion>3</archiveVersion>
       <data>
-        <version>7</version>
+        <version>8</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3481,8 +3557,8 @@
         </option>
         <option>
           <name>Input variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Input description</name>
@@ -3490,8 +3566,8 @@
         </option>
         <option>
           <name>Output variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Output description</name>
@@ -3611,6 +3687,10 @@
         </option>
         <option>
           <name>UseMDU</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AdditionalDriver</name>
           <state></state>
         </option>
       </data>
@@ -4076,6 +4156,7 @@
       <data>
         <extensions></extensions>
         <cmdline></cmdline>
+        <hasPrio>0</hasPrio>
       </data>
     </settings>
     <settings>
@@ -4095,7 +4176,7 @@
       <name>XLINK</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>19</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -4113,7 +4194,7 @@
         </option>
         <option>
           <name>FormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -4315,7 +4396,7 @@
         </option>
         <option>
           <name>ExtraFormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -4419,6 +4500,26 @@
           <name>XLink DPC Address</name>
           <state>1</state>
         </option>
+        <option>
+          <name>XlinkLogEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogInputFiles</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogModuleSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogPrintfScanf</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogSegmentSelection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -4465,9 +4566,9 @@
     <debug>1</debug>
     <settings>
       <name>General</name>
-      <archiveVersion>2</archiveVersion>
+      <archiveVersion>3</archiveVersion>
       <data>
-        <version>7</version>
+        <version>8</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -4597,8 +4698,8 @@
         </option>
         <option>
           <name>Input variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Input description</name>
@@ -4606,8 +4707,8 @@
         </option>
         <option>
           <name>Output variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Output description</name>
@@ -4727,6 +4828,10 @@
         </option>
         <option>
           <name>UseMDU</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AdditionalDriver</name>
           <state></state>
         </option>
       </data>
@@ -5193,6 +5298,7 @@
       <data>
         <extensions></extensions>
         <cmdline></cmdline>
+        <hasPrio>0</hasPrio>
       </data>
     </settings>
     <settings>
@@ -5212,7 +5318,7 @@
       <name>XLINK</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>19</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -5230,7 +5336,7 @@
         </option>
         <option>
           <name>FormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -5432,7 +5538,7 @@
         </option>
         <option>
           <name>ExtraFormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -5536,6 +5642,26 @@
           <name>XLink DPC Address</name>
           <state>1</state>
         </option>
+        <option>
+          <name>XlinkLogEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogInputFiles</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogModuleSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogPrintfScanf</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogSegmentSelection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -5582,9 +5708,9 @@
     <debug>1</debug>
     <settings>
       <name>General</name>
-      <archiveVersion>2</archiveVersion>
+      <archiveVersion>3</archiveVersion>
       <data>
-        <version>7</version>
+        <version>8</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -5714,8 +5840,8 @@
         </option>
         <option>
           <name>Input variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Input description</name>
@@ -5723,8 +5849,8 @@
         </option>
         <option>
           <name>Output variant</name>
-          <version>1</version>
-          <state>2</state>
+          <version>2</version>
+          <state>3</state>
         </option>
         <option>
           <name>Output description</name>
@@ -5844,6 +5970,10 @@
         </option>
         <option>
           <name>UseMDU</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AdditionalDriver</name>
           <state></state>
         </option>
       </data>
@@ -6310,6 +6440,7 @@
       <data>
         <extensions></extensions>
         <cmdline></cmdline>
+        <hasPrio>0</hasPrio>
       </data>
     </settings>
     <settings>
@@ -6329,7 +6460,7 @@
       <name>XLINK</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>19</version>
+        <version>21</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -6347,7 +6478,7 @@
         </option>
         <option>
           <name>FormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -6549,7 +6680,7 @@
         </option>
         <option>
           <name>ExtraFormatVariant</name>
-          <version>8</version>
+          <version>9</version>
           <state>2</state>
         </option>
         <option>
@@ -6652,6 +6783,26 @@
         <option>
           <name>XLink DPC Address</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>XlinkLogEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogInputFiles</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogModuleSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogPrintfScanf</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XlinkLogSegmentSelection</name>
+          <state>0</state>
         </option>
       </data>
     </settings>

@@ -27,7 +27,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -83,6 +83,8 @@
   #include "oad.h"
   #include "oad_target.h"
 #endif
+
+#include "hal_uart.h"
 
 /*********************************************************************
  * MACROS
@@ -261,6 +263,18 @@ static simpleProfileCBs_t simpleBLEPeripheral_SimpleProfileCBs =
 {
   simpleProfileChangeCB    // Charactersitic value change callback
 };
+
+uint8 uartbuff;
+static void uart_rxCB(uint8 port, uint8 event)
+{
+	HalUARTRead(0, &uartbuff, 1);
+	if( uartbuff == 0x55 )
+	{
+		HalUARTWrite(0, "1234567890", 10);
+		osal_memset(&uartbuff, 0, 1);
+	}
+}
+
 /*********************************************************************
  * PUBLIC FUNCTIONS
  */
@@ -352,23 +366,25 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
   GGS_AddService( GATT_ALL_SERVICES );            // GAP
   GATTServApp_AddService( GATT_ALL_SERVICES );    // GATT attributes
   DevInfo_AddService();                           // Device Information Service
-  SimpleProfile_AddService( GATT_ALL_SERVICES );  // Simple GATT Profile
+  SimpleProfile_AddService( GATT_ALL_SERVICES );  // Simple GATT Profile	Ìí¼ÓGATT·þÎñ
 #if defined FEATURE_OAD
   VOID OADTarget_AddService();                    // OAD Profile
 #endif
 
   // Setup the SimpleProfile Characteristic Values	ÉèÖÃÒ»¸ö¼òµ¥¿ò¼ÜµÄÌØÐÔ²ÎÊýÖµ
   {
-    uint8 charValue1 = 1;
+    uint8 charValue1 = 11;
     uint8 charValue2 = 2;
     uint8 charValue3 = 3;
     uint8 charValue4 = 4;
     uint8 charValue5[SIMPLEPROFILE_CHAR5_LEN] = { 1, 2, 3, 4, 5 };
+	uint8 charValue6 = 6;
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR1, sizeof ( uint8 ), &charValue1 );
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR2, sizeof ( uint8 ), &charValue2 );
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR3, sizeof ( uint8 ), &charValue3 );
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR4, sizeof ( uint8 ), &charValue4 );
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR5, SIMPLEPROFILE_CHAR5_LEN, charValue5 );
+	SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR6, sizeof ( uint8 ), &charValue6 );
   }
 
 
@@ -417,7 +433,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
 
 #endif // (defined HAL_LCD) && (HAL_LCD == TRUE)
 
-  // Register callback with SimpleGATTprofile
+  // Register callback with SimpleGATTprofile	×¢²áGATT·þÎñµÄ»Øµ÷
   VOID SimpleProfile_RegisterAppCBs( &simpleBLEPeripheral_SimpleProfileCBs );
 
   // Enable clock divide on halt
@@ -438,6 +454,16 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
   // ÉèÖÃÑÓ³ÙÅäÖÃÎÄ¼þÆô¶¯
   osal_set_event( simpleBLEPeripheral_TaskID, SBP_START_DEVICE_EVT );
 
+	//´®¿Ú³õÊ¼»¯
+	halUARTCfg_t uartConfig;
+	uartConfig.configured = TRUE;
+	uartConfig.baudRate = HAL_UART_BR_115200;
+	uartConfig.flowControl = FALSE;
+	uartConfig.callBackFunc = uart_rxCB;
+	HalUARTOpen(0, &uartConfig);
+
+	HalUARTWrite(0, "abcd", 4);
+	
 }
 
 /*********************************************************************
@@ -496,7 +522,7 @@ uint16 SimpleBLEPeripheral_ProcessEvent( uint8 task_id, uint16 events )
       osal_start_timerEx( simpleBLEPeripheral_TaskID, SBP_PERIODIC_EVT, SBP_PERIODIC_EVT_PERIOD );
     }
 
-    // Perform periodic application task
+    // Perform periodic application task	Ö´ÐÐÖÜÆÚÊÂ¼þ´¦Àíº¯Êý
     performPeriodicTask();
 
     return (events ^ SBP_PERIODIC_EVT);
@@ -806,6 +832,7 @@ static void performPeriodicTask( void )
   uint8 stat;
 
   // Call to retrieve the value of the third characteristic in the profile
+  // »Ö¸´profileÎÄ¼þÖÐµÚÈý¸ö¡°ÌØÐÔ¡±µÄÖµ
   stat = SimpleProfile_GetParameter( SIMPLEPROFILE_CHAR3, &valueToCopy);
 
   if( stat == SUCCESS )
@@ -816,6 +843,7 @@ static void performPeriodicTask( void )
      * a GATT client device, then a notification will be sent every time this
      * function is called.
      */
+    // ½«profileÖÐµÚÈý¸öÌØÐÔµÄÖµ´æµ½µÚ4¸öÌØÐÔÖÐ
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR4, sizeof(uint8), &valueToCopy);
   }
 }
@@ -851,6 +879,21 @@ static void simpleProfileChangeCB( uint8 paramID )
         HalLcdWriteStringValue( "Char 3:", (uint16)(newValue), 10,  HAL_LCD_LINE_3 );
       #endif // (defined HAL_LCD) && (HAL_LCD == TRUE)
 
+      break;
+
+	 case SIMPLEPROFILE_CHAR6:
+      SimpleProfile_GetParameter( SIMPLEPROFILE_CHAR6, &newValue );
+
+		if( newValue == 0x55 )
+		{
+			HalLedSet(HAL_LED_1, HAL_LED_MODE_OFF);
+			HalUARTWrite(0, &newValue, 1);
+		}
+		else if( newValue == 0xAA )
+		{
+			HalLedSet(HAL_LED_1, HAL_LED_MODE_ON);
+			HalUARTWrite(0, &newValue, 1);
+		}
       break;
 
     default:

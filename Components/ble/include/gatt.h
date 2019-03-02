@@ -28,7 +28,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -282,12 +282,12 @@ typedef struct
  */
 typedef struct attAttribute_t
 {
-  gattAttrType_t type; //!< Attribute type (2 or 16 octet UUIDs)
-  uint8 permissions;   //!< Attribute permissions
-  uint16 handle;       //!< Attribute handle - assigned internally by attribute server
+  gattAttrType_t type; //!< Attribute type (2 or 16 octet UUIDs)	ÊôÐÔÀàÐÍ£¨2»ò16¸ö°ËÎ»×Ö½ÚUUID£©
+  uint8 permissions;   //!< Attribute permissions					ÊôÐÔÈ¨ÏÞ
+  uint16 handle;       //!< Attribute handle - assigned internally by attribute server	ÊôÐÔ¾ä±ú - ÓÉÊôÐÔ·þÎñÆ÷ÔÚÄÚ²¿·ÖÅä
   uint8* const pValue; //!< Attribute value - encoding of the octet array is defined in 
                        //!< the applicable profile. The maximum length of an attribute 
-                       //!< value shall be 512 octets.
+                       //!< value shall be 512 octets.	ÊôÐÔÖµ - Êý×éµÄ±àÂëÔÚÊÊÓÃµÄÅäÖÃÎÄ¼þÖÐ¶¨Òå¡£ ÊôÐÔÖµµÄ×î´ó³¤¶ÈÓ¦Îª512¸ö°ËÎ»×Ö½Ú¡£
 } gattAttribute_t;
 
 /**
@@ -337,7 +337,7 @@ extern bStatus_t GATT_InitClient( void );
  * @brief   Register to receive incoming ATT Indications or Notifications
  *          of attribute values.
  *
- * @param   taskId – task to forward indications or notifications to
+ * @param   taskId ?task to forward indications or notifications to
  *
  * @return  void
  */
@@ -451,7 +451,7 @@ extern bStatus_t GATT_DeregisterService( uint16 handle, gattService_t *pService 
 /**
  * @brief   Register to receive incoming ATT Requests.
  *
- * @param   taskId – task to forward requests to
+ * @param   taskId ?task to forward requests to
  *
  * @return  void
  */
@@ -897,8 +897,8 @@ extern bStatus_t GATT_DiscAllCharDescs( uint16 connHandle, uint16 startHandle,
  *          Value parameter.
  *
  *          The Read Response only contains a Characteristic Value that
- *          is less than or equal to (ATT_MTU – 1) octets in length. If 
- *          the Characteristic Value is greater than (ATT_MTU – 1) octets
+ *          is less than or equal to (ATT_MTU ?1) octets in length. If 
+ *          the Characteristic Value is greater than (ATT_MTU ?1) octets
  *          in length, the Read Long Characteristic Value procedure may
  *          be used if the rest of the Characteristic Value is required.
  *
@@ -1028,7 +1028,7 @@ extern bStatus_t GATT_ReadMultiCharValues( uint16 connHandle, attReadMultiReq_t 
  *          to a server when the client knows the Characteristic Value
  *          Handle and the client does not need an acknowledgement that
  *          the write was successfully performed. This sub-procedure
- *          only writes the first (ATT_MTU – 3) octets of a Characteristic
+ *          only writes the first (ATT_MTU ?3) octets of a Characteristic
  *          Value. This sub-procedure can not be used to write a long
  *          characteristic; instead the Write Long Characteristic Values
  *          sub-procedure should be used.
@@ -1064,7 +1064,7 @@ extern bStatus_t GATT_WriteNoRsp( uint16 connHandle, attWriteReq_t *pReq );
  *          bit is enabled and the client and server device share a bond as
  *          defined in the GAP.
  *
- *          This sub-procedure only writes the first (ATT_MTU – 15) octets
+ *          This sub-procedure only writes the first (ATT_MTU ?15) octets
  *          of an Attribute Value. This sub-procedure cannot be used to 
  *          write a long Attribute.
  *
@@ -1441,7 +1441,7 @@ extern void GATT_bm_free( gattMsg_t *pMsg, uint8 opcode );
  *                processing an incoming GATT message.
  *
  * @param   heapSize - internal heap size
- * @param   flowCtrlMode – flow control mode: TRUE or FALSE
+ * @param   flowCtrlMode ?flow control mode: TRUE or FALSE
  *
  * @return  void
  */
@@ -1451,7 +1451,7 @@ extern void GATT_SetHostToAppFlowCtrl( uint16 heapSize, uint8 flowCtrlMode );
  * @brief   This API is used by the Application to notify GATT that
  *          the processing of a message has been completed.
  *
- * @param   pMsg – pointer to the processed GATT message
+ * @param   pMsg ?pointer to the processed GATT message
  *
  * @return  void
  */

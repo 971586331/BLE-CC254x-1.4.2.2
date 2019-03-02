@@ -27,7 +27,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -110,15 +110,15 @@ extern "C"
  */
 typedef enum
 {
-  GAPROLE_INIT = 0,                       //!< Waiting to be started
-  GAPROLE_STARTED,                        //!< Started but not advertising
-  GAPROLE_ADVERTISING,                    //!< Currently Advertising
-  GAPROLE_ADVERTISING_NONCONN,            //!< Currently using non-connectable Advertising
-  GAPROLE_WAITING,                        //!< Device is started but not advertising, is in waiting period before advertising again
-  GAPROLE_WAITING_AFTER_TIMEOUT,          //!< Device just timed out from a connection but is not yet advertising, is in waiting period before advertising again
-  GAPROLE_CONNECTED,                      //!< In a connection
-  GAPROLE_CONNECTED_ADV,                  //!< In a connection + advertising
-  GAPROLE_ERROR                           //!< Error occurred - invalid state
+  GAPROLE_INIT = 0,                       //!< µÈ´ý¿ªÊ¼ Waiting to be started
+  GAPROLE_STARTED,                        //!< ¿ªÊ¼µ«Ã»ÓÐ¹ã¸æ Started but not advertising
+  GAPROLE_ADVERTISING,                    //!< ÕýÔÚ¹ã¸æ Currently Advertising
+  GAPROLE_ADVERTISING_NONCONN,            //!< ÕýÔÚÊ¹ÓÃÃ»ÓÐÁ¬½ÓµÄ¹ã¸æ Currently using non-connectable Advertising
+  GAPROLE_WAITING,                        //!< Éè±¸¿ªÊ¼µ«²âÊÔ¹ã¸æ£¬Èç¹ûÔÚµÈ´ýÆÚ¼äÇ°ÔÙ´Î¹ã¸æ Device is started but not advertising, is in waiting period before advertising again
+  GAPROLE_WAITING_AFTER_TIMEOUT,          //!< Éè±¸´ÓÒ»´ÎÁ¬½Óµ«Ã»ÓÐ¹ã¸æÖÐ³¬Ê±£¬Èç¹ûÔÚµÈ´ýÆÚ¼äÇ°ÔÙ´Î¹ã¸æ Device just timed out from a connection but is not yet advertising, is in waiting period before advertising again
+  GAPROLE_CONNECTED,                      //!< ½øÈëÒ»¸öÁ¬½Ó In a connection
+  GAPROLE_CONNECTED_ADV,                  //!< ½øÈëÒ»¸öÁ¬½Ó¼Ó¹ã¸æ In a connection + advertising
+  GAPROLE_ERROR                           //!< ·¢Éú´íÎó£¬ÎÞÐ§µÄ×´Ì¬ Error occurred - invalid state
 } gaprole_States_t;
 
 /**

@@ -26,7 +26,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -54,6 +54,7 @@
 #include "gatt.h"
 #include "gattservapp.h"
 
+   #include "hal_uart.h"
 /*********************************************************************
  * MACROS
  */
@@ -271,6 +272,7 @@ bStatus_t GATTServApp_ProcessCCCWriteReq( uint16 connHandle, gattAttribute_t *pA
     else
     {
       status = ATT_ERR_INVALID_VALUE_SIZE;
+	  HalUARTWrite(0, "GATTServApp_ProcessCCCWriteReq", 20);
     }
   }
   else
