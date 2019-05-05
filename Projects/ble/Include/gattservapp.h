@@ -27,7 +27,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -379,7 +379,9 @@ typedef struct
 typedef struct
 {
   pfnGATTReadAttrCB_t pfnReadAttrCB;           //!< Read callback function pointer
+  												// µ±²úÉúGATT¶ÁÈ¡ÇëÇóÊ±µ÷ÓÃ
   pfnGATTWriteAttrCB_t pfnWriteAttrCB;         //!< Write callback function pointer
+  												// µ±²úÉúGATTÐ´ÇëÇóÊ±µ÷ÓÃ
   pfnGATTAuthorizeAttrCB_t pfnAuthorizeAttrCB; //!< Authorization callback function pointer
 } gattServiceCBs_t;
 

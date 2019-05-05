@@ -204,7 +204,7 @@ static uint8 simpleProfileChar5UserDesp[17] = "Characteristic 5";
 
 
 // Simple Profile Characteristic 6 Properties
-static uint8 simpleProfileChar6Props = GATT_PROP_READ;
+static uint8 simpleProfileChar6Props = GATT_PROP_READ | GATT_PROP_WRITE;
 
 // Characteristic 6 Value
 static uint8 simpleProfileChar6 = 0;
@@ -393,7 +393,7 @@ static bStatus_t simpleProfile_WriteAttrCB( uint16 connHandle, gattAttribute_t *
 /*********************************************************************
  * PROFILE CALLBACKS
  */
-// Simple Profile Service Callbacks
+// Simple Profile Service Callbacks	简单的Profile服务回调
 CONST gattServiceCBs_t simpleProfileCBs =
 {
   simpleProfile_ReadAttrCB,  // Read callback function pointer
@@ -434,6 +434,7 @@ bStatus_t SimpleProfile_AddService( uint32 services )
   if ( services & SIMPLEPROFILE_SERVICE )
   {
     // Register GATT attribute list and CBs with GATT Server App
+    // 注册GATT属性表和GATT服务应用程序回调
     status = GATTServApp_RegisterService( simpleProfileAttrTbl, 
                                           GATT_NUM_ATTRS( simpleProfileAttrTbl ),
                                           GATT_MAX_ENCRYPT_KEY_SIZE,

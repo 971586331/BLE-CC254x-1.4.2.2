@@ -230,9 +230,9 @@ static void peripheralStateNotificationCB( gaprole_States_t newState );
 static void performPeriodicTask( void );
 static void simpleProfileChangeCB( uint8 paramID );
 
-#if defined( CC2540_MINIDK )
+//#if defined( CC2540_MINIDK )
 static void simpleBLEPeripheral_HandleKeys( uint8 shift, uint8 keys );
-#endif
+//#endif
 
 #if (defined HAL_LCD) && (HAL_LCD == TRUE)
 static char *bdAddr2Str ( uint8 *pAddr );
@@ -378,7 +378,7 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
     uint8 charValue3 = 3;
     uint8 charValue4 = 4;
     uint8 charValue5[SIMPLEPROFILE_CHAR5_LEN] = { 1, 2, 3, 4, 5 };
-	uint8 charValue6 = 6;
+	uint8 charValue6 = 66;
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR1, sizeof ( uint8 ), &charValue1 );
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR2, sizeof ( uint8 ), &charValue2 );
     SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR3, sizeof ( uint8 ), &charValue3 );
@@ -463,6 +463,9 @@ void SimpleBLEPeripheral_Init( uint8 task_id )
 	HalUARTOpen(0, &uartConfig);
 
 	HalUARTWrite(0, "abcd", 4);
+
+	//添加注册按键事件
+	RegisterForKeys( simpleBLEPeripheral_TaskID );
 	
 }
 
@@ -545,12 +548,12 @@ static void simpleBLEPeripheral_ProcessOSALMsg( osal_event_hdr_t *pMsg )
 {
   switch ( pMsg->event )
   {     
-  #if defined( CC2540_MINIDK )
+  //#if defined( CC2540_MINIDK )
     case KEY_CHANGE:
       simpleBLEPeripheral_HandleKeys( ((keyChange_t *)pMsg)->state, 
                                       ((keyChange_t *)pMsg)->keys );
       break;
-  #endif // #if defined( CC2540_MINIDK )
+  //#endif // #if defined( CC2540_MINIDK )
  
     case GATT_MSG_EVENT:
       // Process GATT message
@@ -563,7 +566,7 @@ static void simpleBLEPeripheral_ProcessOSALMsg( osal_event_hdr_t *pMsg )
   }
 }
 
-#if defined( CC2540_MINIDK )
+//#if defined( CC2540_MINIDK )
 /*********************************************************************
  * @fn      simpleBLEPeripheral_HandleKeys
  *
@@ -578,55 +581,16 @@ static void simpleBLEPeripheral_ProcessOSALMsg( osal_event_hdr_t *pMsg )
  */
 static void simpleBLEPeripheral_HandleKeys( uint8 shift, uint8 keys )
 {
-  uint8 SK_Keys = 0;
 
   VOID shift;  // Intentionally unreferenced parameter
 
-  if ( keys & HAL_KEY_SW_1 )
+  if ( keys & HAL_KEY_SW_6 )
   {
-    SK_Keys |= SK_KEY_LEFT;
+  	HalUARTWrite(0, "key6", 4);
   }
 
-  if ( keys & HAL_KEY_SW_2 )
-  {
-
-    SK_Keys |= SK_KEY_RIGHT;
-
-    // if device is not in a connection, pressing the right key should toggle
-    // advertising on and off
-    // Note:  If PLUS_BROADCASTER is define this condition is ignored and
-    //        Device may advertise during connections as well. 
-#ifndef PLUS_BROADCASTER  
-    if( gapProfileState != GAPROLE_CONNECTED )
-    {
-#endif // PLUS_BROADCASTER
-      uint8 current_adv_enabled_status;
-      uint8 new_adv_enabled_status;
-
-      //Find the current GAP advertisement status
-      GAPRole_GetParameter( GAPROLE_ADVERT_ENABLED, &current_adv_enabled_status );
-
-      if( current_adv_enabled_status == FALSE )
-      {
-        new_adv_enabled_status = TRUE;
-      }
-      else
-      {
-        new_adv_enabled_status = FALSE;
-      }
-
-      //change the GAP advertisement status to opposite of current status
-      GAPRole_SetParameter( GAPROLE_ADVERT_ENABLED, sizeof( uint8 ), &new_adv_enabled_status );
-#ifndef PLUS_BROADCASTER
-    }
-#endif // PLUS_BROADCASTER
-  }
-
-  // Set the value of the keys state to the Simple Keys Profile;
-  // This will send out a notification of the keys state if enabled
-  SK_SetParameter( SK_KEY_ATTR, sizeof ( uint8 ), &SK_Keys );
 }
-#endif // #if defined( CC2540_MINIDK )
+//#endif // #if defined( CC2540_MINIDK )
 
 /*********************************************************************
  * @fn      simpleBLEPeripheral_ProcessGATTMsg
