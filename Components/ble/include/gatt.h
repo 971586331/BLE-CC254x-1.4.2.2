@@ -84,14 +84,14 @@ extern "C"
  * @{
  */
 
-#define GATT_PERMIT_READ                 0x01 //!< Attribute is Readable
-#define GATT_PERMIT_WRITE                0x02 //!< Attribute is Writable
-#define GATT_PERMIT_AUTHEN_READ          0x04 //!< Read requires Authentication
-#define GATT_PERMIT_AUTHEN_WRITE         0x08 //!< Write requires Authentication
-#define GATT_PERMIT_AUTHOR_READ          0x10 //!< Read requires Authorization
-#define GATT_PERMIT_AUTHOR_WRITE         0x20 //!< Write requires Authorization
-#define GATT_PERMIT_ENCRYPT_READ         0x40 //!< Read requires Encryption
-#define GATT_PERMIT_ENCRYPT_WRITE        0x80 //!< Write requires Encryption
+#define GATT_PERMIT_READ                 0x01 //!< Attribute is Readable	属性是可读的
+#define GATT_PERMIT_WRITE                0x02 //!< Attribute is Writable	属性是可写的
+#define GATT_PERMIT_AUTHEN_READ          0x04 //!< Read requires Authentication	读需要验证
+#define GATT_PERMIT_AUTHEN_WRITE         0x08 //!< Write requires Authentication写需要验证
+#define GATT_PERMIT_AUTHOR_READ          0x10 //!< Read requires Authorization	读需要授权
+#define GATT_PERMIT_AUTHOR_WRITE         0x20 //!< Write requires Authorization	定需要授权
+#define GATT_PERMIT_ENCRYPT_READ         0x40 //!< Read requires Encryption		读需要加密
+#define GATT_PERMIT_ENCRYPT_WRITE        0x80 //!< Write requires Encryption	定需要加密
   
 /** @} End GATT_PERMIT_BITMAPS_DEFINES */
 
@@ -262,10 +262,10 @@ typedef union
  */
 typedef struct
 {
-  osal_event_hdr_t hdr; //!< GATT_MSG_EVENT and status
-  uint16 connHandle;    //!< Connection message was received on
-  uint8 method;         //!< Type of message
-  gattMsg_t msg;        //!< Attribute protocol/profile message
+  osal_event_hdr_t hdr; //!< GATT_MSG_EVENT and status	事件和状态
+  uint16 connHandle;    //!< Connection message was received on	收到连接消息
+  uint8 method;         //!< Type of message	消息的类型
+  gattMsg_t msg;        //!< Attribute protocol/profile message	属性协议/配置文件消息
 } gattMsgEvent_t;
 
 /**

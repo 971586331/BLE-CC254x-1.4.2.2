@@ -73,7 +73,7 @@
  * CONSTANTS
  */
 
-#define SERVAPP_NUM_ATTR_SUPPORTED        20
+#define SERVAPP_NUM_ATTR_SUPPORTED        25
 
 /*********************************************************************
  * TYPEDEFS
@@ -122,6 +122,12 @@ CONST uint8 simpleProfilechar5UUID[ATT_BT_UUID_SIZE] =
 CONST uint8 simpleProfilechar6UUID[ATT_BT_UUID_SIZE] =
 { 
   LO_UINT16(SIMPLEPROFILE_CHAR6_UUID), HI_UINT16(SIMPLEPROFILE_CHAR6_UUID)
+};
+
+// Characteristic 7 UUID: 0xFFF7
+CONST uint8 simpleProfilechar7UUID[ATT_BT_UUID_SIZE] =
+{ 
+  LO_UINT16(SIMPLEPROFILE_CHAR7_UUID), HI_UINT16(SIMPLEPROFILE_CHAR7_UUID)
 };
 
 
@@ -212,6 +218,16 @@ static uint8 simpleProfileChar6 = 0;
 // Simple Profile Characteristic 6 User Description
 static uint8 simpleProfileChar6UserDesp[17] = "Characteristic 6";
 
+// Simple Profile Characteristic 7 Properties
+static uint8 simpleProfileChar7Props = GATT_PROP_INDICATE;
+
+// Characteristic 6 Value
+static uint8 simpleProfileChar7[SIMPLEPROFILE_CHAR7_LEN] = {0};
+
+static gattCharCfg_t * simpleProfileChar7Config;
+
+// Simple Profile Characteristic 7 User Description
+static uint8 simpleProfileChar7UserDesp[17] = "Characteristic 7";
 
 /*********************************************************************
  * Profile Attributes - Table
@@ -221,34 +237,34 @@ static gattAttribute_t simpleProfileAttrTbl[SERVAPP_NUM_ATTR_SUPPORTED] =
 {
   // Simple Profile Service
   { 
-    { ATT_BT_UUID_SIZE, primaryServiceUUID }, /* type */
-    GATT_PERMIT_READ,                         /* permissions */
-    0,                                        /* handle */
-    (uint8 *)&simpleProfileService            /* pValue */
+    { ATT_BT_UUID_SIZE, primaryServiceUUID }, /* type UUID的长度和类型 */
+    GATT_PERMIT_READ,                         /* permissions 属性的权限 */
+    0,                                        /* handle  */
+    (uint8 *)&simpleProfileService            /* pValue 属性的值，为自定义的UUID */
   },
 
     // Characteristic 1 Declaration	特性1声明
     { 
-      { ATT_BT_UUID_SIZE, characterUUID },
+      { ATT_BT_UUID_SIZE, characterUUID },	//特征
       GATT_PERMIT_READ, 
       0,
-      &simpleProfileChar1Props 
+      &simpleProfileChar1Props 	//特征值的权限
     },
 
       // Characteristic Value 1	特性值1
       { 
-        { ATT_BT_UUID_SIZE, simpleProfilechar1UUID },
-        GATT_PERMIT_READ | GATT_PERMIT_WRITE, 	//特性值1有可读可写属性
+        { ATT_BT_UUID_SIZE, simpleProfilechar1UUID },	//自定义的UUID
+        GATT_PERMIT_READ | GATT_PERMIT_WRITE, 	//属性的权限
         0, 
         &simpleProfileChar1 		//特性值1的值
       },
 
       // Characteristic 1 User Description	特性1使用说明
       { 
-        { ATT_BT_UUID_SIZE, charUserDescUUID },
+        { ATT_BT_UUID_SIZE, charUserDescUUID },	//特征使用描述
         GATT_PERMIT_READ, 
         0, 
-        simpleProfileChar1UserDesp 
+        simpleProfileChar1UserDesp 				//特征的名称
       },      
 
     // Characteristic 2 Declaration
@@ -377,6 +393,40 @@ static gattAttribute_t simpleProfileAttrTbl[SERVAPP_NUM_ATTR_SUPPORTED] =
         GATT_PERMIT_READ, 
         0, 
         simpleProfileChar6UserDesp 
+      },
+
+	// Characteristic 7 Declaration	声明特征7
+    { 
+      { ATT_BT_UUID_SIZE, characterUUID },	//特征
+      GATT_PERMIT_READ, 
+      0,
+      &simpleProfileChar7Props 				//权限，指示
+    },
+
+      // Characteristic Value 7	特征值7
+      { 
+        { ATT_BT_UUID_SIZE, simpleProfilechar7UUID },	//自定义的UUID
+        0,
+        0, 
+        simpleProfileChar7 							//特征的值
+      },
+
+	
+		// Characteristic 7 configuration	特征7配置
+	  { 
+		{ ATT_BT_UUID_SIZE, clientCharCfgUUID },	//配置成客户
+		GATT_PERMIT_READ | GATT_PERMIT_WRITE,
+		0, 
+		(uint8 *)&simpleProfileChar7Config 
+	  },
+	  
+
+      // Characteristic 7 User Description
+      { 
+        { ATT_BT_UUID_SIZE, charUserDescUUID },		//特征使用描述
+        GATT_PERMIT_READ, 
+        0, 
+        simpleProfileChar7UserDesp 
       },
 };
 
@@ -561,6 +611,17 @@ bStatus_t SimpleProfile_SetParameter( uint8 param, uint8 len, void *value )
         ret = bleInvalidRange;
       }
       break;
+
+	case SIMPLEPROFILE_CHAR7:
+	  if ( len == SIMPLEPROFILE_CHAR7_LEN ) 
+      {
+        VOID osal_memcpy(simpleProfileChar7, value, SIMPLEPROFILE_CHAR7_LEN);
+      }
+      else
+      {
+        ret = bleInvalidRange;
+      }
+      break;
       
     default:
       ret = INVALIDPARAMETER;
@@ -610,6 +671,10 @@ bStatus_t SimpleProfile_GetParameter( uint8 param, void *value )
 
 	case SIMPLEPROFILE_CHAR6:
       *((uint8*)value) = simpleProfileChar6;
+      break;
+
+	case SIMPLEPROFILE_CHAR7:
+	  VOID osal_memcpy(value, simpleProfileChar7, SIMPLEPROFILE_CHAR7_LEN);
       break;
 	  
     default:
@@ -684,6 +749,11 @@ static bStatus_t simpleProfile_ReadAttrCB( uint16 connHandle, gattAttribute_t *p
 		  *pLen = 1;
 		  pValue[0] = *pAttr->pValue;
 		  break;
+		  
+	case SIMPLEPROFILE_CHAR7_UUID:
+		*pLen = SIMPLEPROFILE_CHAR7_LEN;
+		VOID osal_memcpy(pValue, pAttr->pValue, SIMPLEPROFILE_CHAR7_LEN);
+		break;
 
       default:
         // Should never get here! (characteristics 3 and 4 do not have read permissions)
@@ -802,6 +872,7 @@ static bStatus_t simpleProfile_WriteAttrCB( uint16 connHandle, gattAttribute_t *
 
       case GATT_CLIENT_CHAR_CFG_UUID:
 	  	//HalUARTWrite(0, "simpleProfile_WriteAttrCB -> GATT_CLIENT_CHAR_CFG_UUID", 50);
+	  	//if( pAttr->handle == simpleProfileAttrTbl[ATTRTBL_CHAR4_CCC_IDX].handle )
         status = GATTServApp_ProcessCCCWriteReq( connHandle, pAttr, pValue, len,
                                                  offset, GATT_CLIENT_CFG_NOTIFY );
         break;

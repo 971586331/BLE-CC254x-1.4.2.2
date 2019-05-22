@@ -27,7 +27,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -79,13 +79,13 @@
  */
 int main(void)
 {
-  /* Initialize hardware */
+  /* Initialize hardware ³õÊ¼»¯16MºÍ32KµÄ¾§Õñ */
   HAL_BOARD_INIT();
 
-  // Initialize board I/O
+  // Initialize board I/O ³õÊ¼»¯°åÔØµÄIO
   InitBoard( OB_COLD );
 
-  /* Initialze the HAL driver */
+  /* Initialze the HAL driver ³õÊ¼»¯Ê¹ÓÃµ½µÄÍâÉè */
   HalDriverInit();
 
   /* Initialize NV system */
@@ -93,13 +93,13 @@ int main(void)
   
   /* Initialize LL */
 
-  /* Initialize the operating system */
+  /* Initialize the operating system ³õÊ¼»¯²Ù×÷ÏµÍ³ */
   osal_init_system();
 
   /* Enable interrupts */
   HAL_ENABLE_INTERRUPTS();
 
-  // Final board initialization
+  // Final board initialization	×îºó³õÊ¼»¯°å×Ó
   InitBoard( OB_READY );
 
   #if defined ( POWER_SAVING )

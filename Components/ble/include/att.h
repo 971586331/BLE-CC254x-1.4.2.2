@@ -26,7 +26,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -76,35 +76,35 @@ extern "C"
  * @{
  */
 
-#define ATT_ERROR_RSP                    0x01 //!< ATT Error Response
-#define ATT_EXCHANGE_MTU_REQ             0x02 //!< ATT Exchange MTU Request
-#define ATT_EXCHANGE_MTU_RSP             0x03 //!< ATT Exchange MTU Response
-#define ATT_FIND_INFO_REQ                0x04 //!< ATT Find Information Request
-#define ATT_FIND_INFO_RSP                0x05 //!< ATT Find Information Response
-#define ATT_FIND_BY_TYPE_VALUE_REQ       0x06 //!< ATT Find By Type Vaue Request
-#define ATT_FIND_BY_TYPE_VALUE_RSP       0x07 //!< ATT Find By Type Vaue Response
-#define ATT_READ_BY_TYPE_REQ             0x08 //!< ATT Read By Type Request
-#define ATT_READ_BY_TYPE_RSP             0x09 //!< ATT Read By Type Response
-#define ATT_READ_REQ                     0x0a //!< ATT Read Request
-#define ATT_READ_RSP                     0x0b //!< ATT Read Response
-#define ATT_READ_BLOB_REQ                0x0c //!< ATT Read Blob Request
-#define ATT_READ_BLOB_RSP                0x0d //!< ATT Read Blob Response
-#define ATT_READ_MULTI_REQ               0x0e //!< ATT Read Multiple Request
-#define ATT_READ_MULTI_RSP               0x0f //!< ATT Read Multiple Response
-#define ATT_READ_BY_GRP_TYPE_REQ         0x10 //!< ATT Read By Group Type Request
-#define ATT_READ_BY_GRP_TYPE_RSP         0x11 //!< ATT Read By Group Type Response
-#define ATT_WRITE_REQ                    0x12 //!< ATT Write Request
-#define ATT_WRITE_RSP                    0x13 //!< ATT Write Response
-#define ATT_PREPARE_WRITE_REQ            0x16 //!< ATT Prepare Write Request
-#define ATT_PREPARE_WRITE_RSP            0x17 //!< ATT Prepare Write Response
-#define ATT_EXECUTE_WRITE_REQ            0x18 //!< ATT Execute Write Request
-#define ATT_EXECUTE_WRITE_RSP            0x19 //!< ATT Execute Write Response
-#define ATT_HANDLE_VALUE_NOTI            0x1b //!< ATT Handle Value Notification
-#define ATT_HANDLE_VALUE_IND             0x1d //!< ATT Handle Value Indication
-#define ATT_HANDLE_VALUE_CFM             0x1e //!< ATT Handle Value Confirmation
+#define ATT_ERROR_RSP                    0x01 //!< ATT Error Response				ATT´íÎóÏìÓ¦
+#define ATT_EXCHANGE_MTU_REQ             0x02 //!< ATT Exchange MTU Request			ATT½»»»MTUÇëÇó
+#define ATT_EXCHANGE_MTU_RSP             0x03 //!< ATT Exchange MTU Response		ATT½»»»MTUÏìÓ¦
+#define ATT_FIND_INFO_REQ                0x04 //!< ATT Find Information Request		ATT²éÕÒÐÅÏ¢ÇëÇó
+#define ATT_FIND_INFO_RSP                0x05 //!< ATT Find Information Response	ATT²éÕÒÐÅÏ¢ÏìÓ¦
+#define ATT_FIND_BY_TYPE_VALUE_REQ       0x06 //!< ATT Find By Type Vaue Request	ATT½ÓÀàÐÍ²éÕÒÖµÇëÇó
+#define ATT_FIND_BY_TYPE_VALUE_RSP       0x07 //!< ATT Find By Type Vaue Response	ATT°´ÀàÐÍ²éÕÒÖµÏìÓ¦
+#define ATT_READ_BY_TYPE_REQ             0x08 //!< ATT Read By Type Request			ATT°´ÀàÐÍ¶ÁÇëÇó
+#define ATT_READ_BY_TYPE_RSP             0x09 //!< ATT Read By Type Response		ATT°´ÀàÐÍ¶ÁÏìÓ¦
+#define ATT_READ_REQ                     0x0a //!< ATT Read Request					ATT¶ÁÇëÇó
+#define ATT_READ_RSP                     0x0b //!< ATT Read Response				ATT¶ÁÏìÓ¦
+#define ATT_READ_BLOB_REQ                0x0c //!< ATT Read Blob Request			ATT¶ÁBlobÇëÇó
+#define ATT_READ_BLOB_RSP                0x0d //!< ATT Read Blob Response			ATT¶ÁBlobÏìÓ¦
+#define ATT_READ_MULTI_REQ               0x0e //!< ATT Read Multiple Request		ATT¶ÁÈ¡¶à¸öÇëÇó	
+#define ATT_READ_MULTI_RSP               0x0f //!< ATT Read Multiple Response		ATT¶ÁÈ¡¶à¸öÏìÓ¦
+#define ATT_READ_BY_GRP_TYPE_REQ         0x10 //!< ATT Read By Group Type Request	ATT°´×éÀàÐÍ¶ÁÇëÇó
+#define ATT_READ_BY_GRP_TYPE_RSP         0x11 //!< ATT Read By Group Type Response	ATT°´×éÀàÐÍ¶ÁÏìÓ¦
+#define ATT_WRITE_REQ                    0x12 //!< ATT Write Request				ATTÐ´ÇëÇó
+#define ATT_WRITE_RSP                    0x13 //!< ATT Write Response				ATTÐ´ÏìÓ¦
+#define ATT_PREPARE_WRITE_REQ            0x16 //!< ATT Prepare Write Request		ATT×¼±¸Ð´ÇëÇó
+#define ATT_PREPARE_WRITE_RSP            0x17 //!< ATT Prepare Write Response		ATT×¼±¸Ð´ÏìÓ¦
+#define ATT_EXECUTE_WRITE_REQ            0x18 //!< ATT Execute Write Request		ATTÖ´ÐÐÐ´ÇëÇó
+#define ATT_EXECUTE_WRITE_RSP            0x19 //!< ATT Execute Write Response		ATTÖ´ÐÐÐ´ÏìÓ¦
+#define ATT_HANDLE_VALUE_NOTI            0x1b //!< ATT Handle Value Notification	ATT´¦ÀíÍ¨ÖªÖµ
+#define ATT_HANDLE_VALUE_IND             0x1d //!< ATT Handle Value Indication		ATT´¦ÀíÖ¸Ê¾Öµ
+#define ATT_HANDLE_VALUE_CFM             0x1e //!< ATT Handle Value Confirmation	ATT´¦ÀíÈ·ÈÏÖµ
 
-#define ATT_WRITE_CMD                    0x52 //!< ATT Write Command
-#define ATT_SIGNED_WRITE_CMD             0xD2 //!< ATT Signed Write Command
+#define ATT_WRITE_CMD                    0x52 //!< ATT Write Command				ATTÐ´ÃüÁî
+#define ATT_SIGNED_WRITE_CMD             0xD2 //!< ATT Signed Write Command			ATTÐ´µ¥¸öÃüÁî
 
 /** @} End ATT_METHOD_DEFINES */
 

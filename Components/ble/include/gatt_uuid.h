@@ -27,7 +27,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -66,44 +66,45 @@ extern "C"
  * WARNING: The 16-bit UUIDs are assigned by the Bluetooth SIG and published
  *          in the Bluetooth Assigned Numbers page. Do not change these values.
  *          Changing them will cause Bluetooth interoperability issues.
+ 	¾¯¸æ£ºÕâÐ©16Î»µÄUUIDÒÑ¾­ÓÉÀ¶ÑÀ¼¼ÊõÁªÃË·¢²¼ÔÚÀ¶ÑÀ±àºÅ·ÖÅäÒ³ÖÐ£¬²»Òª¸Ä±äÕâÐ©Öµ£¬¸Ä±äÕâÐ©Öµ»áÓ°ÏìÀ¶ÑÀÐ­ÒÇµÄÍ¨ÓÃÐÔ
  */
 
 /**
- * GATT Services
+ * GATT Services	GATT·þÎñ
  */
-#define GAP_SERVICE_UUID                           0x1800 // Generic Access Profile
-#define GATT_SERVICE_UUID                          0x1801 // Generic Attribute Profile
+#define GAP_SERVICE_UUID                           0x1800 // Generic Access Profile		Í¨ÓÃ½ÓÈë¹æ·¶
+#define GATT_SERVICE_UUID                          0x1801 // Generic Attribute Profile	Í¨ÓÃÊôÐÔ¹æ·¶
 
 /**
- * GATT Declarations
+ * GATT Declarations	GATTÉùÃ÷
  */
-#define GATT_PRIMARY_SERVICE_UUID                  0x2800 // Primary Service
-#define GATT_SECONDARY_SERVICE_UUID                0x2801 // Secondary Service
-#define GATT_INCLUDE_UUID                          0x2802 // Include
-#define GATT_CHARACTER_UUID                        0x2803 // Characteristic
+#define GATT_PRIMARY_SERVICE_UUID                  0x2800 // Primary Service	Ö÷Òª·þÎñ
+#define GATT_SECONDARY_SERVICE_UUID                0x2801 // Secondary Service	¸¨Öú·þÎñ
+#define GATT_INCLUDE_UUID                          0x2802 // Include			°üº¬
+#define GATT_CHARACTER_UUID                        0x2803 // Characteristic		ÌØÕ÷
 
 /**
- * GATT Descriptors
+ * GATT Descriptors	GATTÃèÊö·û
  */
-#define GATT_CHAR_EXT_PROPS_UUID                   0x2900 // Characteristic Extended Properties
-#define GATT_CHAR_USER_DESC_UUID                   0x2901 // Characteristic User Description
-#define GATT_CLIENT_CHAR_CFG_UUID                  0x2902 // Client Characteristic Configuration
-#define GATT_SERV_CHAR_CFG_UUID                    0x2903 // Server Characteristic Configuration
-#define GATT_CHAR_FORMAT_UUID                      0x2904 // Characteristic Presentation Format
-#define GATT_CHAR_AGG_FORMAT_UUID                  0x2905 // Characteristic Aggregate Format
-#define GATT_VALID_RANGE_UUID                      0x2906 // Valid Range
-#define GATT_EXT_REPORT_REF_UUID                   0x2907 // External Report Reference Descriptor
-#define GATT_REPORT_REF_UUID                       0x2908 // Report Reference Descriptor
+#define GATT_CHAR_EXT_PROPS_UUID                   0x2900 // Characteristic Extended Properties	À©Õ¹ÊôÐÔÌØÕ÷
+#define GATT_CHAR_USER_DESC_UUID                   0x2901 // Characteristic User Description	ÌØÕ÷Ê¹ÓÃÃèÊö
+#define GATT_CLIENT_CHAR_CFG_UUID                  0x2902 // Client Characteristic Configuration	¿Í»§¶ËÌØÕ÷ÅäÖÃ
+#define GATT_SERV_CHAR_CFG_UUID                    0x2903 // Server Characteristic Configuration	·þÎñ¶ËÌØÕ÷ÅäÖÃ
+#define GATT_CHAR_FORMAT_UUID                      0x2904 // Characteristic Presentation Format		ÌØÕ÷±íÊ¾¸ñÊ½
+#define GATT_CHAR_AGG_FORMAT_UUID                  0x2905 // Characteristic Aggregate Format		ÌØÕ÷¾ÛºÏ¸ñÊ½
+#define GATT_VALID_RANGE_UUID                      0x2906 // Valid Range							ÓÐ×ÊÖµ·¶Î§
+#define GATT_EXT_REPORT_REF_UUID                   0x2907 // External Report Reference Descriptor	Íâ²¿±¨¸æÒýÓÃÃèÊö·û
+#define GATT_REPORT_REF_UUID                       0x2908 // Report Reference Descriptor			±¨¸æ²Î¿¼ÃèÊö·û
 
 /**
- * GATT Characteristics
+ * GATT Characteristics	GATTÌØÕ÷
  */
-#define DEVICE_NAME_UUID                           0x2A00 // Device Name
-#define APPEARANCE_UUID                            0x2A01 // Appearance
-#define PERI_PRIVACY_FLAG_UUID                     0x2A02 // Peripheral Privacy Flag
-#define RECONNECT_ADDR_UUID                        0x2A03 // Reconnection Address
-#define PERI_CONN_PARAM_UUID                       0x2A04 // Peripheral Preferred Connection Parameters
-#define SERVICE_CHANGED_UUID                       0x2A05 // Service Changed
+#define DEVICE_NAME_UUID                           0x2A00 // Device Name	Éè±¸Ãû³Æ
+#define APPEARANCE_UUID                            0x2A01 // Appearance		Íâ¹Û
+#define PERI_PRIVACY_FLAG_UUID                     0x2A02 // Peripheral Privacy Flag	ÖÜ±ßÒþË½±êÖ¾
+#define RECONNECT_ADDR_UUID                        0x2A03 // Reconnection Address		ÖØÁ¬µØÖ·
+#define PERI_CONN_PARAM_UUID                       0x2A04 // Peripheral Preferred Connection Parameters	ÍâÎ§Ê×Ñ¡Á¬½Ó²ÎÊý
+#define SERVICE_CHANGED_UUID                       0x2A05 // Service Changed	·þÎñ¸Ä±ä
 
 /*********************************************************************
  * MACROS

@@ -26,7 +26,7 @@
  its documentation for any purpose.
 
  YOU FURTHER ACKNOWLEDGE AND AGREE THAT THE SOFTWARE AND DOCUMENTATION ARE
- PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
+ PROVIDED “AS IS?WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED,
  INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF MERCHANTABILITY, TITLE,
  NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL
  TEXAS INSTRUMENTS OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER CONTRACT,
@@ -111,21 +111,37 @@ extern "C"
  * @{
  */
 #define GAP_DEVICE_INIT_DONE_EVENT            0x00 //!< Sent when the Device Initialization is complete.  This event is sent as an OSAL message defined as gapDeviceInitDoneEvent_t.
+													//Éè±¸³õÊ¼»¯Íê³Éºó·¢ËÍ¡£ ´ËÊÂ¼þ×÷Îª¶¨ÒåÎªgapDeviceInitDoneEvent_tµÄOSALÏûÏ¢·¢ËÍ¡£
 #define GAP_DEVICE_DISCOVERY_EVENT            0x01 //!< Sent when the Device Discovery Process is complete. This event is sent as an OSAL message defined as gapDevDiscEvent_t.
+													//Éè±¸·¢ÏÖ¹ý³ÌÍê³Éºó·¢ËÍ
 #define GAP_ADV_DATA_UPDATE_DONE_EVENT        0x02 //!< Sent when the Advertising Data or SCAN_RSP Data has been updated. This event is sent as an OSAL message defined as gapAdvDataUpdateEvent_t.
+													//¹ã¸æÊý¾Ý»òSCAN_RSPÊý¾Ý¸üÐÂºó·¢ËÍ
 #define GAP_MAKE_DISCOVERABLE_DONE_EVENT      0x03 //!< Sent when the Make Discoverable Request is complete. This event is sent as an OSAL message defined as gapMakeDiscoverableRspEvent_t.
+													//ÖÆ×÷·¢ÏÖÇëÇóºó·¢ËÍ
 #define GAP_END_DISCOVERABLE_DONE_EVENT       0x04 //!< Sent when the Advertising has ended. This event is sent as an OSAL message defined as gapEndDiscoverableRspEvent_t.
+													//¹ã¸æÍê³Éºó·¢ËÍ
 #define GAP_LINK_ESTABLISHED_EVENT            0x05 //!< Sent when the Establish Link Request is complete. This event is sent as an OSAL message defined as gapEstLinkReqEvent_t.
+													//½¨Á¢Á¬½ÓÇëÇóÍê³Éºó·¢ËÍ
 #define GAP_LINK_TERMINATED_EVENT             0x06 //!< Sent when a connection was terminated. This event is sent as an OSAL message defined as gapTerminateLinkEvent_t.
+													//Á¬½ÓÖÕÖ¹Ê±·¢ËÍ
 #define GAP_LINK_PARAM_UPDATE_EVENT           0x07 //!< Sent when an Update Parameters Event is received. This event is sent as an OSAL message defined as gapLinkUpdateEvent_t.
+													//ÊÕµ½¸üÐÂ²ÎÊýÊÂ¼þÊ±·¢ËÍ
 #define GAP_RANDOM_ADDR_CHANGED_EVENT         0x08 //!< Sent when a random address was changed. This event is sent as an OSAL message defined as gapRandomAddrEvent_t.
+													//Ëæ»úµØÖ·¸Ä±äÊ±·¢ËÍ
 #define GAP_SIGNATURE_UPDATED_EVENT           0x09 //!< Sent when the device's signature counter is updated. This event is sent as an OSAL message defined as gapSignUpdateEvent_t.
+													//¸üÐÂÉè±¸µÄÇ©Ãû¼ÆÊýÆ÷Ê±·¢ËÍ
 #define GAP_AUTHENTICATION_COMPLETE_EVENT     0x0A //!< Sent when the Authentication (pairing) process is complete. This event is sent as an OSAL message defined as gapAuthCompleteEvent_t.
+													//Éí·ÝÑéÖ¤£¨Åä¶Ô£©¹ý³ÌÍê³ÉÊ±·¢ËÍ
 #define GAP_PASSKEY_NEEDED_EVENT              0x0B //!< Sent when a Passkey is needed.  This is part of the pairing process. This event is sent as an OSAL message defined as gapPasskeyNeededEvent_t.
+													//ÐèÒªÃÜÔ¿Ê±·¢ËÍ¡£ ÕâÊÇÅä¶Ô¹ý³ÌµÄÒ»²¿·Ö¡£s
 #define GAP_SLAVE_REQUESTED_SECURITY_EVENT    0x0C //!< Sent when a Slave Security Request is received. This event is sent as an OSAL message defined as gapSlaveSecurityReqEvent_t.
+													//ÊÕµ½´ÓÊô°²È«ÇëÇóÊ±·¢ËÍ
 #define GAP_DEVICE_INFO_EVENT                 0x0D //!< Sent during the Device Discovery Process when a device is discovered. This event is sent as an OSAL message defined as gapDeviceInfoEvent_t.
+													//ÔÚÉè±¸·¢ÏÖ¹ý³ÌÖÐ·¢ÏÖÉè±¸Ê±·¢ËÍ
 #define GAP_BOND_COMPLETE_EVENT               0x0E //!< Sent when the bonding(bound) process is complete. This event is sent as an OSAL message defined as gapBondCompleteEvent_t.
+													//°ó¶¨£¨°ó¶¨£©¹ý³ÌÍê³ÉÊ±·¢ËÍ
 #define GAP_PAIRING_REQ_EVENT                 0x0F //!< Sent when an unexpected Pairing Request is received. This event is sent as an OSAL message defined as gapPairingReqEvent_t.
+													//ÊÕµ½ÒâÍâµÄÅä¶ÔÇëÇóÊ±·¢ËÍ
 /** @} End GAP_MSG_EVENT_DEFINES */
 
 /** @defgroup GAP_CONN_HANDLE_DEFINES GAP Special Connection Handles
@@ -153,11 +169,17 @@ extern "C"
  */
 // Timers
 #define TGAP_GEN_DISC_ADV_MIN          0  //!< Minimum time to remain advertising, when in Discoverable mode (mSec).  Setting this parameter to 0 turns off the timeout (default).
+											//´¦ÓÚ¿É·¢ÏÖÄ£Ê½£¨mSec£©Ê±±£³Ö¹ã¸æµÄ×î¶ÌÊ±¼ä¡£ ½«´Ë²ÎÊýÉèÖÃÎª0½«¹Ø±Õ³¬Ê±£¨Ä¬ÈÏ£©
 #define TGAP_LIM_ADV_TIMEOUT           1  //!< Maximum time to remain advertising, when in Limited Discoverable mode. In seconds (default 180 seconds)
+											//´¦ÓÚÏÞÖÆ¿É·¢ÏÖÄ£Ê½Ê±£¬±£Áô¹ã¸æµÄ×î³¤Ê±¼ä¡£ ÒÔÃëÎªµ¥Î»£¨Ä¬ÈÏÎª180Ãë£©
 #define TGAP_GEN_DISC_SCAN             2  //!< Minimum time to perform scanning, when performing General Discovery proc (mSec)
+											//Ö´ÐÐÍ¨ÓÃ·¢ÏÖ¹ý³Ì£¨mSec£©Ê±Ö´ÐÐÉ¨ÃèµÄ×î¶ÌÊ±¼ä
 #define TGAP_LIM_DISC_SCAN             3  //!< Minimum time to perform scanning, when performing Limited Discovery proc (mSec)
+											//Ö´ÐÐÏÞÖÆ·¢ÏÖ¹ý³Ì£¨mSec£©Ê±Ö´ÐÐÉ¨ÃèµÄ×î¶ÌÊ±¼ä
 #define TGAP_CONN_EST_ADV_TIMEOUT      4  //!< Advertising timeout, when performing Connection Establishment proc (mSec)
+											//Ö´ÐÐÁ¬½Ó½¨Á¢¹ý³Ì£¨mSec£©Ê±µÄ¹ã¸æ³¬Ê±
 #define TGAP_CONN_PARAM_TIMEOUT        5  //!< Link Layer connection parameter update notification timer, connection parameter update proc (mSec)
+											//Á´Â·²ãÁ¬½Ó²ÎÊý¸üÐÂÍ¨Öª¶¨Ê±Æ÷£¬Á¬½Ó²ÎÊý¸üÐÂ¹ý³Ì£¨mSec£©
 
 // Constants
 #define TGAP_LIM_DISC_ADV_INT_MIN      6  //!< Minimum advertising interval, when in limited discoverable mode (n * 0.625 mSec)
