@@ -225,7 +225,7 @@ static bool simpleBLEProcedureInProgress = FALSE;
 
 uint8 gStatus;
 
-uint8 target_addr[6] = {6,5,4,3,2,1};
+uint8 target_addr[6] = {0xB7,0x81,0x1D,0xCF,0xE5,0xE0};
 uint8 target_addrType = 0;
 
 /*********************************************************************
@@ -263,12 +263,19 @@ static const gapBondCBs_t simpleBLEBondCB =
   simpleBLECentralPairStateCB	//GAP绑定管理状态回调函数
 };
 
+void delay(uint16 n)
+{
+	uint16 x;
+	for(x=0; x<n; x++);
+}
+
 void my_printf(uint8 * str)
 {
 	uint8 len;
 
 	len = strlen(str);
 	HalUARTWrite(0, str, len);
+	delay(10000);
 }
 
 void my_printf_num(uint8 * str, uint32 num)
@@ -284,6 +291,8 @@ static void uart_rxCB(uint8 port, uint8 event)
 {
 	HalUARTRead(0, &uartbuff, 1);
 
+	/*
+	//按第一次为发现设备，连接设备后再按为读写
 	if( uartbuff == 0x11 )	//UP
 	{
 		// Start or stop discovery 开始或发现状态时
@@ -352,6 +361,61 @@ static void uart_rxCB(uint8 port, uint8 event)
 		  }
 		}	 
 	}
+	*/
+	
+	
+	//按第一次为发现设备，连接设备后再按为读notity
+	if(uartbuff == 0x11)	//执行连接操作
+	{
+		// Start or stop discovery 开始或发现状态时
+		if ( simpleBLEState != BLE_STATE_CONNECTED )
+		{
+		  if ( !simpleBLEScanning ) 	//执行设备发现
+		  {
+			simpleBLEScanning = TRUE;
+			simpleBLEScanRes = 0;
+			
+			GAPCentralRole_StartDiscovery( DEFAULT_DISCOVERY_MODE,
+										   DEFAULT_DISCOVERY_ACTIVE_SCAN,
+										   DEFAULT_DISCOVERY_WHITE_LIST );		
+		  }
+		  else
+		  {
+			GAPCentralRole_CancelDiscovery();	//取消设备发现扫描
+		  }
+		}
+			//如果是连接状态，且找到的设备特征不为0个，且上一阶段处理进程完成
+		else if ( simpleBLEState == BLE_STATE_CONNECTED &&
+				  simpleBLECharHdl != 0 &&
+				  simpleBLEProcedureInProgress == FALSE )
+		{
+			uint8 status;
+			attWriteReq_t req;
+
+			req.pValue = GATT_bm_alloc(simpleBLEConnHandle, ATT_WRITE_REQ, 2, NULL);
+			if ( req.pValue != NULL )
+			{
+				req.handle = simpleBLECharHdl+1;	//char4r CCC特征值句柄
+				req.len = 2;
+				req.pValue[0] = LO_UINT16(0x0001);	//0x0001为打开notify
+				req.pValue[1] = HI_UINT16(0x0001);
+				req.sig = 0;
+				req.cmd = 0;
+				status = GATT_WriteCharValue(simpleBLEConnHandle, &req, simpleBLETaskId);
+				my_printf_num("key 11 status > ", status);
+				if ( status != SUCCESS )
+			 	{
+					GATT_bm_free( (gattMsg_t *)&req, ATT_WRITE_REQ );
+			  	}
+			}
+			else
+			{
+			  status = bleMemAllocError;
+			}
+		}	 
+	}
+	
+	
 	if(uartbuff == 0x22)	//执行连接操作
 	{
 		// Connect or disconnect	连接或断开
@@ -818,6 +882,14 @@ static void simpleBLECentralProcessGATTMsg( gattMsgEvent_t *pMsg )
   {
     simpleBLEGATTDiscoveryEvent( pMsg );	//进行应用数据发现
   }
+
+  else if( pMsg->method == ATT_HANDLE_VALUE_NOTI )
+  {
+	if( pMsg->msg.handleValueNoti.handle == simpleBLECharHdl )	//char4的特征值句柄
+	{
+		my_printf_num("notify value:", pMsg->msg.handleValueNoti.pValue[0]);
+	}
+  }
   
   GATT_bm_free( &pMsg->msg, pMsg->method );
 }
@@ -1088,26 +1160,25 @@ static void simpleBLEGATTDiscoveryEvent( gattMsgEvent_t *pMsg )
         req.startHandle = simpleBLESvcStartHdl;
         req.endHandle = simpleBLESvcEndHdl;
         req.type.len = ATT_BT_UUID_SIZE;
-        req.type.uuid[0] = LO_UINT16(SIMPLEPROFILE_CHAR1_UUID);	//要操作的特性的UUID
-        req.type.uuid[1] = HI_UINT16(SIMPLEPROFILE_CHAR1_UUID);
+        req.type.uuid[0] = LO_UINT16(SIMPLEPROFILE_CHAR4_UUID);	//要操作的特性的UUID
+        req.type.uuid[1] = HI_UINT16(SIMPLEPROFILE_CHAR4_UUID);
 
-        GATT_ReadUsingCharUUID( simpleBLEConnHandle, &req, simpleBLETaskId );	//获得这个特性的句柄
+        GATT_ReadUsingCharUUID( simpleBLEConnHandle, &req, simpleBLETaskId );	//获得这个特性的句柄，供读写时操作
       }
     }
   }
   else if ( simpleBLEDiscState == BLE_DISC_STATE_CHAR )	//如果是特征发现
   {
-  	my_printf("simpleBLEGATTDiscoveryEvent() > if BLE_DISC_STATE_CHAR\n");
+  	//my_printf("simpleBLEGATTDiscoveryEvent() > if BLE_DISC_STATE_CHAR\n");
     // Characteristic found, store handle	找到特征值
     if ( pMsg->method == ATT_READ_BY_TYPE_RSP && 
          pMsg->msg.readByTypeRsp.numPairs > 0 )
     {
-    	my_printf("simpleBLEGATTDiscoveryEvent() > if 4\n");
     	//从返回的数据中得到一个特性值句柄
       simpleBLECharHdl = BUILD_UINT16(pMsg->msg.readByTypeRsp.pDataList[0],
                                       pMsg->msg.readByTypeRsp.pDataList[1]);
+		my_printf_num("simpleBLEGATTDiscoveryEvent() > if 4 \n", simpleBLECharHdl);
       
-      LCD_WRITE_STRING( "Simple Svc Found", HAL_LCD_LINE_1 );
       simpleBLEProcedureInProgress = FALSE;
     }
     

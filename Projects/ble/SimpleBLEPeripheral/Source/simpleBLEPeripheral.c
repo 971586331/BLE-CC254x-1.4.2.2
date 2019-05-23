@@ -95,7 +95,7 @@
  */
 
 // How often to perform periodic event
-#define SBP_PERIODIC_EVT_PERIOD                   5000
+#define SBP_PERIODIC_EVT_PERIOD                   2000
 
 // What is the advertising interval when device is discoverable (units of 625us, 160=100ms)
 #define DEFAULT_ADVERTISING_INTERVAL          160
@@ -790,16 +790,18 @@ static void peripheralStateNotificationCB( gaprole_States_t newState )
  *
  * @return  none
  */
+ uint8 notify_value = 0;
 static void performPeriodicTask( void )
 {
   uint8 valueToCopy;
   uint8 stat;
 
+	notify_value ++;
   // Call to retrieve the value of the third characteristic in the profile
   // 恢复profile文件中第三个“特性”的值
-  stat = SimpleProfile_GetParameter( SIMPLEPROFILE_CHAR3, &valueToCopy);
+  //stat = SimpleProfile_GetParameter( SIMPLEPROFILE_CHAR3, &valueToCopy);
 
-  if( stat == SUCCESS )
+  //if( stat == SUCCESS )
   {
     /*
      * Call to set that value of the fourth characteristic in the profile. Note
@@ -808,7 +810,7 @@ static void performPeriodicTask( void )
      * function is called.
      */
     // 将profile中第三个特性的值存到第4个特性中
-    SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR4, sizeof(uint8), &valueToCopy);
+    SimpleProfile_SetParameter( SIMPLEPROFILE_CHAR4, sizeof(uint8), &notify_value);
   }
 }
 
