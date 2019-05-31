@@ -833,11 +833,17 @@ extern bStatus_t GATT_DiscAllChars( uint16 connHandle, uint16 startHandle,
  *          application task will receive multiple OSAL GATT_MSG_EVENT messages.
  *          The type of the messages will be either ATT_READ_BY_TYPE_RSP
  *          or ATT_ERROR_RSP (if an error occurred on the server).
- *
+ 			当仅知道服务句柄范围并且已知特征UUID时，客户端使用该子过程来发现服务器上的服务特性。
+ 			特定服务可能在服务器上多次存在。 被发现的特征由特征UUID识别。 ATT Read By Type Request
+ 			用于将Attribute Type设置为UUID for“Characteristics”，Starting Handle和Ending Handle参数
+ 			设置为服务句柄范围。 如果此函数的返回状态为SUCCESS，则调用应用程序任务将收到多个
+ 			OSAL GATT_MSG_EVENT消息。消息的类型将是ATT_READ_BY_TYPE_RSP或ATT_ERROR_RSP（如果服务器上发生错误）。
+ 
  *          Note: This sub-procedure is complete when either ATT_READ_BY_TYPE_RSP
  *                (with bleProcedureComplete or bleTimeout status) or ATT_ERROR_RSP
  *                (with SUCCESS status) is received by the calling application task.
- *
+ *			注意：当调用应用程序任务接收到ATT_READ_BY_TYPE_RSP（具有bleProcedureComplete或bleTimeout状态）
+ 				或ATT_ERROR_RSP（具有SUCCESS状态）时，此子过程完成。
  * @param   connHandle - connection to use
  * @param   pReq - pointer to request to be sent
  * @param   taskId - task to be notified of response

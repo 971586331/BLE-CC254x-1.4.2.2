@@ -225,7 +225,9 @@ static bool simpleBLEProcedureInProgress = FALSE;
 
 uint8 gStatus;
 
-uint8 target_addr[6] = {0xB7,0x81,0x1D,0xCF,0xE5,0xE0};
+//uint8 target_addr[6] = {0xB7,0x81,0x1D,0xCF,0xE5,0xE0};
+uint8 target_addr[6] = {0xCF,0xD5,0x26,0x1A,0x9E,0xA0};
+
 uint8 target_addrType = 0;
 
 /*********************************************************************
@@ -290,10 +292,10 @@ uint8 uartbuff;
 static void uart_rxCB(uint8 port, uint8 event)
 {
 	HalUARTRead(0, &uartbuff, 1);
-
-	/*
+	
+	
 	//按第一次为发现设备，连接设备后再按为读写
-	if( uartbuff == 0x11 )	//UP
+	if( uartbuff == 0x55 )	//UP
 	{
 		// Start or stop discovery 开始或发现状态时
 		if ( simpleBLEState != BLE_STATE_CONNECTED )
@@ -317,6 +319,14 @@ static void uart_rxCB(uint8 port, uint8 event)
 				  simpleBLECharHdl != 0 &&
 				  simpleBLEProcedureInProgress == FALSE )
 		{
+			uint8 status;
+			// Do a read
+			attReadReq_t req;
+			
+			req.handle = simpleBLECharHdl;
+			status = GATT_ReadCharValue( simpleBLEConnHandle, &req, simpleBLETaskId );	//从指定句柄中读取数据
+			simpleBLEProcedureInProgress = TRUE;
+		/*
 		  uint8 status;
 		  
 		  // Do a read or write as long as no other read or write is in progress
@@ -359,9 +369,11 @@ static void uart_rxCB(uint8 port, uint8 event)
 			simpleBLEProcedureInProgress = TRUE;
 			simpleBLEDoWrite = !simpleBLEDoWrite;	//如果本次读成功，将下次按UP改为写，如果本次写成功，将下次接UP改为读
 		  }
+		*/
+		
 		}	 
 	}
-	*/
+	
 	
 	
 	//按第一次为发现设备，连接设备后再按为读notity
@@ -395,7 +407,7 @@ static void uart_rxCB(uint8 port, uint8 event)
 			req.pValue = GATT_bm_alloc(simpleBLEConnHandle, ATT_WRITE_REQ, 2, NULL);
 			if ( req.pValue != NULL )
 			{
-				req.handle = simpleBLECharHdl+1;	//char4r CCC特征值句柄
+				req.handle = simpleBLECharHdl + 1;	//0x2A37的句柄
 				req.len = 2;
 				req.pValue[0] = LO_UINT16(0x0001);	//0x0001为打开notify
 				req.pValue[1] = HI_UINT16(0x0001);
@@ -414,7 +426,55 @@ static void uart_rxCB(uint8 port, uint8 event)
 			}
 		}	 
 	}
-	
+
+	//按第一次为发现设备，连接设备后再按为读notity
+	if(uartbuff == 0x12)	//执行连接操作
+	{
+		// Start or stop discovery 开始或发现状态时
+		if ( simpleBLEState != BLE_STATE_CONNECTED )
+		{
+		  if ( !simpleBLEScanning ) 	//执行设备发现
+		  {
+			simpleBLEScanning = TRUE;
+			simpleBLEScanRes = 0;
+			
+			GAPCentralRole_StartDiscovery( DEFAULT_DISCOVERY_MODE,
+										   DEFAULT_DISCOVERY_ACTIVE_SCAN,
+										   DEFAULT_DISCOVERY_WHITE_LIST );		
+		  }
+		  else
+		  {
+			GAPCentralRole_CancelDiscovery();	//取消设备发现扫描
+		  }
+		}
+			//如果是连接状态，且找到的设备特征不为0个，且上一阶段处理进程完成
+		else if ( simpleBLEState == BLE_STATE_CONNECTED &&
+				  simpleBLECharHdl != 0 &&
+				  simpleBLEProcedureInProgress == FALSE )
+		{
+				uint8 status;
+			  attWriteReq_t req;
+
+			  req.pValue = GATT_bm_alloc(simpleBLEConnHandle, ATT_WRITE_REQ, 2, NULL);
+			  if ( req.pValue != NULL )
+			  {
+			    req.handle = simpleBLECharHdl+2;
+			    req.len = 2;
+			    req.sig = FALSE;
+			    req.cmd = TRUE;
+
+			    req.pValue[0] = LO_UINT16(GATT_CLIENT_CFG_NOTIFY);
+			    req.pValue[1] = HI_UINT16(GATT_CLIENT_CFG_NOTIFY);
+
+				status = GATT_WriteNoRsp(simpleBLEConnHandle, &req);
+				my_printf_num("key 12 notify > ", status);
+			    if (status != SUCCESS)
+			    {
+			      GATT_bm_free((gattMsg_t *)&req, ATT_WRITE_REQ);
+			    }
+			  }
+		}	 
+	}
 	
 	if(uartbuff == 0x22)	//执行连接操作
 	{
@@ -827,6 +887,9 @@ static void simpleBLECentralProcessGATTMsg( gattMsgEvent_t *pMsg )
 {
 	
 	my_printf_num("simpleBLECentralProcessGATTMsg() > ", pMsg->method);
+	my_printf_num("GATT error > ", pMsg->msg.errorRsp.errCode);
+	my_printf_num("notify > ", pMsg->msg.handleValueNoti.handle);	
+	
   if ( simpleBLEState != BLE_STATE_CONNECTED )	//如果BLE不是连接状态
   {
     // In case a GATT message came after a connection has dropped,
@@ -842,7 +905,7 @@ static void simpleBLECentralProcessGATTMsg( gattMsgEvent_t *pMsg )
     if ( pMsg->method == ATT_ERROR_RSP )	//如果是错误响应
     {
       uint8 status = pMsg->msg.errorRsp.errCode;	//显示错误代码
-      
+	  
       LCD_WRITE_STRING_VALUE( "Read Error", status, 10, HAL_LCD_LINE_1 );
     }
     else
@@ -851,12 +914,12 @@ static void simpleBLECentralProcessGATTMsg( gattMsgEvent_t *pMsg )
       uint8 valueRead = pMsg->msg.readRsp.pValue[0];
 
       LCD_WRITE_STRING_VALUE( "Read rsp:", valueRead, 10, HAL_LCD_LINE_1 );
-	  my_printf_num("Read rsp:", valueRead);
+	  my_printf(pMsg->msg.readRsp.pValue);
     }
     
     simpleBLEProcedureInProgress = FALSE;
   }
-		 //写
+	//写
   else if ( ( pMsg->method == ATT_WRITE_RSP ) ||
        ( ( pMsg->method == ATT_ERROR_RSP ) &&
          ( pMsg->msg.errorRsp.reqOpcode == ATT_WRITE_REQ ) ) )
@@ -885,9 +948,10 @@ static void simpleBLECentralProcessGATTMsg( gattMsgEvent_t *pMsg )
 
   else if( pMsg->method == ATT_HANDLE_VALUE_NOTI )
   {
-	if( pMsg->msg.handleValueNoti.handle == simpleBLECharHdl )	//char4的特征值句柄
+	if( pMsg->msg.handleValueNoti.handle == simpleBLECharHdl+1 )	//char4的特征值句柄
 	{
 		my_printf_num("notify value:", pMsg->msg.handleValueNoti.pValue[0]);
+		my_printf_num("notify value:", pMsg->msg.handleValueNoti.pValue[1]);
 	}
   }
   
@@ -1105,8 +1169,8 @@ static void simpleBLECentralPasscodeCB( uint8 *deviceAddr, uint16 connectionHand
  */
 static void simpleBLECentralStartDiscovery( void )
 {
-  uint8 uuid[ATT_BT_UUID_SIZE] = { LO_UINT16(SIMPLEPROFILE_SERV_UUID),
-                                   HI_UINT16(SIMPLEPROFILE_SERV_UUID) };
+  //uint8 uuid[ATT_BT_UUID_SIZE] = { LO_UINT16(SIMPLEPROFILE_SERV_UUID),HI_UINT16(SIMPLEPROFILE_SERV_UUID) };
+  uint8 uuid[ATT_BT_UUID_SIZE] = { LO_UINT16(0x180D),HI_UINT16(0x180D) };
   
   // Initialize cached handles	初始化缓存的句柄
   simpleBLESvcStartHdl = simpleBLESvcEndHdl = simpleBLECharHdl = 0;
@@ -1132,6 +1196,7 @@ static void simpleBLEGATTDiscoveryEvent( gattMsgEvent_t *pMsg )
   attReadByTypeReq_t req;
 
 	my_printf_num("simpleBLEGATTDiscoveryEvent() > ", pMsg->method);
+	my_printf_num("simpleBLEDiscState =  ", simpleBLEDiscState);
   
   if ( simpleBLEDiscState == BLE_DISC_STATE_SVC )	//如果发现状态是服务发现
   {
@@ -1160,10 +1225,13 @@ static void simpleBLEGATTDiscoveryEvent( gattMsgEvent_t *pMsg )
         req.startHandle = simpleBLESvcStartHdl;
         req.endHandle = simpleBLESvcEndHdl;
         req.type.len = ATT_BT_UUID_SIZE;
-        req.type.uuid[0] = LO_UINT16(SIMPLEPROFILE_CHAR4_UUID);	//要操作的特性的UUID
-        req.type.uuid[1] = HI_UINT16(SIMPLEPROFILE_CHAR4_UUID);
+        //req.type.uuid[0] = LO_UINT16(SIMPLEPROFILE_CHAR1_UUID);	//要操作的特性的UUID
+        //req.type.uuid[1] = HI_UINT16(SIMPLEPROFILE_CHAR1_UUID);
+        req.type.uuid[0] = LO_UINT16(0x2A37);	//要操作的特性的UUID
+        req.type.uuid[1] = HI_UINT16(0x2A37);
 
-        GATT_ReadUsingCharUUID( simpleBLEConnHandle, &req, simpleBLETaskId );	//获得这个特性的句柄，供读写时操作
+        //GATT_ReadUsingCharUUID( simpleBLEConnHandle, &req, simpleBLETaskId );	//获得这个特性的句柄，供读写时操作
+        GATT_DiscCharsByUUID( simpleBLEConnHandle, &req, simpleBLETaskId );
       }
     }
   }
